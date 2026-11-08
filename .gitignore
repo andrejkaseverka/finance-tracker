@@ -1,0 +1,23 @@
+# Dependencies and build output
+node_modules/
+dist/
+build/
+coverage/
+.angular/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Claude Code: personal settings stay local, project settings (.claude/settings.json) are versioned
+.claude/settings.local.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
