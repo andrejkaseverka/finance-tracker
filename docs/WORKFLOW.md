@@ -23,7 +23,7 @@
 - At least **one review** from the other person:
   - Andrea reviews the sister's PRs and **explains** the suggestions (why, not just what).
   - The sister reads and comments on Andrea's PRs. Questions are welcome comments too.
-- Prefer *squash merge*, so `main` keeps one commit per issue.
+- Prefer _squash merge_, so `main` keeps one commit per issue.
 
 ## Definition of Done
 

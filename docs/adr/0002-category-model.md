@@ -6,21 +6,22 @@
 ## Context
 
 We want highly customisable classification of transactions:
-- Hierarchy from general to specific, e.g. *Food → Restaurants*, shown in charts as a drill-down (sunburst/treemap).
-- A different kind of grouping such as *Need / Want / Savings / Investment*. This does not follow the tree:
-  *Food* can be a Need or a Want.
-- Ad-hoc labels such as *Vacation 2026* that cut across everything.
+
+- Hierarchy from general to specific, e.g. _Food → Restaurants_, shown in charts as a drill-down (sunburst/treemap).
+- A different kind of grouping such as _Need / Want / Savings / Investment_. This does not follow the tree:
+  _Food_ can be a Need or a Want.
+- Ad-hoc labels such as _Vacation 2026_ that cut across everything.
 - Totals in reports must add up, so no amount may be counted twice.
 
 ## Options
 
-1. **Many-to-many transaction ↔ category** (a transaction can be in *Food* and *Restaurants* and *Want*)
+1. **Many-to-many transaction ↔ category** (a transaction can be in _Food_ and _Restaurants_ and _Want_)
    - ➕ Maximally flexible.
    - ➖ No structure. Summing by category counts amounts several times, charts don't add up, and the UI has to keep categories consistent by hand.
 2. **Tree + dimensions + tags** ✅
    - **Category tree:** each transaction points to exactly **one** node. Its ancestors are implied, so
      totals roll up correctly and form a proper hierarchy for charts.
-   - **Dimensions:** user-defined, independent classifications (e.g. *Necessity*), each with its own values.
+   - **Dimensions:** user-defined, independent classifications (e.g. _Necessity_), each with its own values.
      A transaction has at most one value per dimension. Categories carry **default** values (inherited down
      the tree), and single transactions can **override** them.
    - **Tags (later):** free many-to-many labels for filtering. They are not used for totals that must add up.
