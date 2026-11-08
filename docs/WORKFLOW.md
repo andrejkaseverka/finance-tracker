@@ -16,6 +16,22 @@
   `feat: add account list page`, `fix: ...`, `docs: ...`, `test: ...`, `chore: ...`, `refactor: ...`.
 - Keep commits small and focused.
 
+## Formatting (Prettier)
+
+All Markdown, JSON and (later) frontend files are formatted by [Prettier](https://prettier.io/). The Prettier and Node versions are pinned in the repo, so everyone gets identical results.
+
+One-time setup after cloning:
+
+1. Install Node **24.22.2** (see [.nvmrc](../.nvmrc)), e.g. with [nvm-windows](https://github.com/coreybutler/nvm-windows) or [fnm](https://github.com/Schniz/fnm).
+2. Run `npm ci` in the repo root. It installs the pinned Prettier. With another Node version it fails on purpose.
+3. Optional: run `git config blame.ignoreRevsFile .git-blame-ignore-revs`. Then `git blame` skips pure reformatting commits listed in [.git-blame-ignore-revs](../.git-blame-ignore-revs) and shows who really wrote each line. GitHub does this automatically. The setting is per clone, so each person sets it once, after the file exists in their working copy (after `git pull`).
+
+Daily use:
+
+- `npm run format` formats everything, `npm run format:check` only reports problems.
+- Run `npm run format` before you commit. Line endings are always LF (see [.gitattributes](../.gitattributes)), regardless of Windows settings.
+- A commit that only reformats code goes in its own commit, and its hash is added to `.git-blame-ignore-revs`.
+
 ## Pull requests
 
 - Use the PR template. Link the issue (`Closes #12`).
