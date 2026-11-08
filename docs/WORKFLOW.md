@@ -32,6 +32,13 @@ Daily use:
 - Run `npm run format` before you commit. Line endings are always LF (see [.gitattributes](../.gitattributes)), regardless of Windows settings.
 - A commit that only reformats code goes in its own commit, and its hash is added to `.git-blame-ignore-revs`.
 
+How formatting is enforced (each layer catches what the previous one missed):
+
+1. **Editor:** VS Code formats on save (see [.vscode/settings.json](../.vscode/settings.json)).
+2. **Claude Code:** a hook ([.claude/settings.json](../.claude/settings.json)) formats every file the agent edits.
+3. **Pre-commit:** `husky` + `lint-staged` format the staged files before each commit. It is installed by `npm ci`. If it ever reformats something you did not expect, check `git diff` and commit again.
+4. **CI:** the **Prettier check** workflow must be green before a PR can be merged. This is the only layer that cannot be skipped.
+
 ## Pull requests
 
 - Use the PR template. Link the issue (`Closes #12`).
