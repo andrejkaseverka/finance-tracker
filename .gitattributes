@@ -1,0 +1,18 @@
+# Normalise line endings to LF in the repo AND in the working tree, on every OS.
+# This overrides each person's core.autocrlf, so Prettier sees the same bytes everywhere.
+* text=auto eol=lf
+
+# Windows-only scripts must keep CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files: never touch.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
