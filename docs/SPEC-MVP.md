@@ -51,10 +51,13 @@ Priority: **M** Must, **S** Should, **C** Could, **W** Won't for now. Source: **
 - **T3 (M, S):** As a user I want to give a transaction an optional **day** next to the month. It is not required.
 - **T4 (M, A+S):** As a user I want an optional **note** that can name the expense (e.g. _dentist_). There is one free text field.
 - **T5 (M):** As a user I want to see the transactions of a selected month and to edit and delete them.
+  - Transactions are listed in **entry order** only. The optional day does not affect the order.
+- **T6 (M):** The **home screen** is the monthly overview (O1–O3) with a clearly visible link to the transaction entry form.
+- **A transaction can use a non-leaf category** (e.g. just _Food_). Totals roll up without counting it twice.
 
 ### Regular payments
 
-- **R1 (M, A):** As a user I want a list of **templates** for regular payments (name, category, amount, note) that I can add, edit and archive.
+- **R1 (M, A):** As a user I want a list of **templates** for regular payments (name, category, amount, note) that I can add, edit and archive. The template amount is only a **prefilled value** that can be changed when copying.
 - **R2 (M, A):** As a user I want a **"Copy regular payments into a month"** action: it shows all templates as editable rows (amount, note), I adjust them and save them as transactions in one step. This also handles expenses that are very similar but not equal from month to month.
 
 ### Categories
@@ -73,10 +76,10 @@ Priority: **M** Must, **S** Should, **C** Could, **W** Won't for now. Source: **
 - **D1 (M, A+S):** As a user I want the importance of an expense to be one dimension, _Necessity_, with the values **Need, Want, Saving**. It applies to expenses only, not to income.
 - **D2 (M, A):** As a user I want every expense category to have a Necessity value, so that its transactions are classified automatically.
   - A subcategory takes the value of its parent unless I set its own. The **Expenses** root always has a value, so there is always a value to inherit.
-  - The value cannot be cleared, only changed.
+  - The value cannot be cleared, only changed. The **Expenses** root starts as **Need**.
 - **D3 (M, A):** As a user I want to override the value on a single transaction (e.g. food that is a _Want_ this time).
 - **Necessity is required.** Every expense always has one of the three values, so there is no "unassigned" in any overview.
-- The data model allows more dimensions. The MVP has only _Necessity_ (see open question 3).
+- The data model allows more dimensions. The MVP has only _Necessity_ in the UI.
 
 ### Overviews
 
@@ -106,21 +109,30 @@ Priority: **M** Must, **S** Should, **C** Could, **W** Won't for now. Source: **
 | Spreading a payment over several months; count of uses and average cost per use            | W        | S      |
 | Listing and statistics per category                                                        | W        | S      |
 | Happiness / satisfaction with a purchase                                                   | W        | S      |
+| Bulk entry of several rows in an editable table                                            | W        | A+S    |
 | Target ratio of Need / Want / Saving                                                       | W        | A      |
 | Regular vs. irregular split in overviews, warning about an old exchange rate               | W        | A      |
 
 ## Open questions
 
-To be decided at the workshop:
+Still open:
 
-1. Can a transaction use a **non-leaf** category (e.g. just _Food_)? _(Proposal: yes.)_
-2. What should be on the **home screen**: the monthly overview, or the transaction list with a quick-add form?
-3. Does the UI show only _Necessity_ in the MVP? _(Proposal: yes, the model supports more.)_
-4. **Dimension ratio base:** is the share counted from total expenses (Need + Want + Saving = 100 %), or from income (like the 50/30/20 rule)? _(Proposal: show both.)_
-5. How are **savings** entered: as expenses with the value _Saving_, so that they show in the ratio? _(Proposal: yes.)_
-6. **Order within a month:** how are transactions without a day sorted? _(Proposal: by entry order, those with a day first.)_
-7. Do the templates have a fixed amount, or only an estimate to be checked every month? _(Proposal: the amount is only a prefilled value.)_
-8. **Bulk entry** after a long time: is the fast form (T1, T2) enough, or do we need an editable table of several rows? Depends on whether the bank import (Could) is built.
-9. Which Necessity value does the **Expenses** root start with? _(Proposal: Need.)_
+1. **Dimension ratio base.** Current direction: the share is counted **from income only** (like the 50/30/20 rule), but this needs more thought.
+2. **How savings are entered.** Depends on question 1, not decided yet.
 
-Decided at the workshop: no default category tree (only the two roots), refunds are negative expenses, the UI is in Czech.
+   The dilemma: money sent to and from the **financial reserve** and the **building savings (stavebko)**, how does it count?
+   - **Option A:** a deposit is an expense with the value _Saving_, and a withdrawal comes back as income. Then the same money shows up in the income and in the ratio twice over time.
+   - **Option B:** _Saving_ is not entered at all. It is whatever is left of the income after subtracting Need and Want.
+
+   Questions to settle: do deposits and withdrawals count as _Saving_ and then as income, or is _Saving_ only the remainder after Need and Want? How does either choice fit with "no accounts, no transfers" (ADR 0003)?
+
+Decided at the workshop:
+
+- No default category tree (only the two roots), refunds are negative expenses, the UI is in Czech.
+- A transaction **can** use a non-leaf category.
+- The home screen is the **monthly overview**, with a clearly visible link to entering transactions (T6).
+- The UI shows only **Necessity** for now.
+- Transactions within a month are ordered **by entry order only**.
+- Template amounts are **only a prefilled value** that can be changed.
+- **Bulk entry** (editable table of several rows) is Won't for now. The fast form (T1, T2) is used.
+- The **Expenses** root starts with **Need**.

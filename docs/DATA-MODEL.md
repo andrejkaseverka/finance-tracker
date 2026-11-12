@@ -95,7 +95,7 @@ erDiagram
 - No cycles: a category cannot be moved under itself or its descendant. This is checked in the API.
 - **Inserting an intermediate category** is one operation in the API: create the new parent under the given parent and
   move the chosen sibling categories under it in one database transaction. Transactions keep their categories.
-- A transaction points to **one** node, which may be a non-leaf (open question). Ancestors are implied, so
+- A transaction points to **one** node, which may be a non-leaf (decided: allowed). Ancestors are implied, so
   rolled-up totals never count a transaction twice.
 - Roll-up totals use a recursive CTE (`WITH RECURSIVE`) in PostgreSQL. The detail level of an overview is a depth limit on that query.
 
