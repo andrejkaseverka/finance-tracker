@@ -33,9 +33,9 @@ By week 4 the Angular side should have covered components, forms, routing, HttpC
 
 - [x] Create a GitHub repository, add the remote, invite the sister as a collaborator.
 - [x] Protect `main`: merges only through pull requests, CI has to pass (once it exists).
-- [ ] After the first run of the **Prettier check** workflow: make it a required status check on `main` and enable **Require branches to be up to date before merging** (Settings → Branches / Rules).
+- [x] After the first run of the **Prettier check** workflow: make it a required status check on `main` and enable **Require branches to be up to date before merging** (Settings → Branches / Rules).
 - [x] Labels: `good first issue`, `learning`, `frontend`, `backend`, `infra`, `docs`, `bug`.
-- [ ] Set up the environment on both PCs:
+- [x] Set up the environment on both PCs:
   - Git, Docker Desktop + WSL2
   - Node LTS 24.22.2+ + Angular CLI (`npm i -g @angular/cli`)
   - Python 3.12+ and [`uv`](https://docs.astral.sh/uv/)
