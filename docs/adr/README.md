@@ -3,10 +3,11 @@
 An ADR is a short note about one important decision: what we decided, why, and what alternatives we considered.
 ADRs are never rewritten. If a decision changes, write a new ADR that _supersedes_ the old one.
 
-| #                                  | Title                                              | Status   |
-| ---------------------------------- | -------------------------------------------------- | -------- |
-| [0001](0001-local-docker-stack.md) | Local Docker stack: Angular + FastAPI + PostgreSQL | Accepted |
-| [0002](0002-category-model.md)     | Category model: tree + dimensions + tags           | Proposed |
+| #                                    | Title                                              | Status   |
+| ------------------------------------ | -------------------------------------------------- | -------- |
+| [0001](0001-local-docker-stack.md)   | Local Docker stack: Angular + FastAPI + PostgreSQL | Accepted |
+| [0002](0002-category-model.md)       | Category model: tree + dimensions + tags           | Proposed |
+| [0003](0003-no-accounts-czk-only.md) | No accounts and CZK only (for now)                 | Proposed |
 
 ## Template
 

@@ -18,12 +18,12 @@ Small HTML/CSS tasks (layout, styling) go to the sister during the MVP, so she s
 
 ## Timeline overview
 
-| Week | Phase                               | Milestone                                                      |
-| ---- | ----------------------------------- | -------------------------------------------------------------- |
-| 1    | 0: Setup, 1: Specification workshop | Final `SPEC-MVP.md` and `DATA-MODEL.md`, backlog of issues     |
-| 2    | 2: Walking skeleton                 | Accounts work end to end (UI → API → DB) in Docker on both PCs |
-| 3–6  | 3: MVP features                     | **MVP v1.0**, which we both use                                |
-| 7+   | 4+: Post-MVP                        | One mini-spec per feature                                      |
+| Week | Phase                               | Milestone                                                        |
+| ---- | ----------------------------------- | ---------------------------------------------------------------- |
+| 1    | 0: Setup, 1: Specification workshop | Final `SPEC-MVP.md` and `DATA-MODEL.md`, backlog of issues       |
+| 2    | 2: Walking skeleton                 | Categories work end to end (UI → API → DB) in Docker on both PCs |
+| 3–6  | 3: MVP features                     | **MVP v1.0**, which we both use                                  |
+| 7+   | 4+: Post-MVP                        | One mini-spec per feature                                        |
 
 By week 4 the Angular side should have covered components, forms, routing, HttpClient and signals.
 
@@ -33,9 +33,9 @@ By week 4 the Angular side should have covered components, forms, routing, HttpC
 
 - [x] Create a GitHub repository, add the remote, invite the sister as a collaborator.
 - [x] Protect `main`: merges only through pull requests, CI has to pass (once it exists).
-- [ ] After the first run of the **Prettier check** workflow: make it a required status check on `main` and enable **Require branches to be up to date before merging** (Settings → Branches / Rules).
+- [x] After the first run of the **Prettier check** workflow: make it a required status check on `main` and enable **Require branches to be up to date before merging** (Settings → Branches / Rules).
 - [x] Labels: `good first issue`, `learning`, `frontend`, `backend`, `infra`, `docs`, `bug`.
-- [ ] Set up the environment on both PCs:
+- [x] Set up the environment on both PCs:
   - Git, Docker Desktop + WSL2
   - Node LTS 24.22.2+ + Angular CLI (`npm i -g @angular/cli`)
   - Python 3.12+ and [`uv`](https://docs.astral.sh/uv/)
@@ -59,38 +59,38 @@ By week 4 the Angular side should have covered components, forms, routing, HttpC
 
 ## Phase 2: Walking skeleton (week 2)
 
-Goal: a single entity (**Account**) goes all the way through UI → API → DB, running in Docker.
+Goal: a single entity (**Category**, flat list first, the tree comes in Phase 3) goes all the way through UI → API → DB, running in Docker.
 
 Frontend + infrastructure:
 
 - [ ] `docker-compose.yml`: `db` (Postgres, named volume), `api` (FastAPI), `web` (nginx serves the Angular build and proxies `/api` to `api`), all ports bound to `127.0.0.1`.
 - [ ] `.env.example`, `.gitignore`.
 - [ ] Angular project in `frontend/` (routing, SCSS, ESLint, Prettier), dev proxy to the API.
-- [ ] `AccountsService` built on HttpClient, plus account list and form pages.
+- [ ] `CategoriesService` built on HttpClient, plus category list and form pages.
 
 Backend:
 
 - [ ] FastAPI project in `backend/` (uv, Ruff, pytest).
-- [ ] DB connection, SQLAlchemy models, the first Alembic migration (`account`).
-- [ ] CRUD endpoints `/api/accounts`, with tests running against a test database.
+- [ ] DB connection, SQLAlchemy models, the first Alembic migration (`category`).
+- [ ] CRUD endpoints `/api/categories`, with tests running against a test database.
 
 Shared:
 
 - [ ] GitHub Actions: lint and tests for frontend and backend on every PR.
 - [ ] `scripts/backup.ps1` + `scripts/restore.ps1`, plus README instructions for Task Scheduler.
 
-**Done when:** `docker compose up` works on both PCs, and an account created in the UI survives a container restart and a PC restart.
+**Done when:** `docker compose up` works on both PCs, and a category created in the UI survives a container restart and a PC restart.
 
 ## Phase 3: MVP features (weeks 3–6)
 
 Each feature is split into a **backend issue** and a **frontend issue**. The API contract is agreed in the issue first.
 
-1. **Accounts & currencies:** name, currency, archive, balance.
-2. **Category tree:** create, rename, move within the tree, archive (instead of delete).
-3. **Dimensions:** dimensions and their values, a default value per category (inherited down the tree).
-4. **Transactions:** create, edit, delete; a form with a category tree picker and dimension overrides.
-5. **Transfers & currency exchange** between accounts.
-6. **Monthly overview:** income, expenses and balance per currency; totals by category tree (expandable) and by dimension (tables).
+1. **Category tree:** create, rename, move within the tree, insert an intermediate category, archive (instead of delete).
+2. **Dimension _Necessity_** (Need / Want / Saving): a default value per category (inherited down the tree).
+3. **Transactions:** create, edit, delete; entered per month with an optional day; a fast form with a category picker and a dimension override.
+4. **Regular payment templates:** a template list and "copy into a month" with editable rows.
+5. **Monthly overview:** income, expenses and balance; totals by category tree (expandable, with a detail level) and by dimension.
+6. **Yearly overviews** (Should): per year, per month of a year, and the Need / Want / Saving ratio over time (tables).
 7. **Layout & styling** (sister, HTML/CSS): navigation, page layout, consistent form styles.
 
 **Milestone: MVP v1.0.** Tag `v1.0.0`; we both use it for real.
@@ -104,8 +104,10 @@ The order will be confirmed at the workshop. Each item gets a short mini-spec (i
 3. **Bank CSV import:** per-bank column mapping, imported transactions in `pending_review` state, a review screen,
    bulk category assignment, auto-categorisation rules, duplicate detection.
    _(The sister can explore bank statement formats in Python/Jupyter first.)_
-4. **Base-currency reporting:** an exchange rate table (manual or from the Czech National Bank), totals in CZK.
-5. **Recurring payments and savings goals.**
-6. **Split transactions:** one payment split across several categories.
-7. **Budgets and limits** (lowest priority).
-8. _Maybe:_ sync between devices or mobile access, which needs a new ADR (see [ADR 0001](adr/0001-local-docker-stack.md)).
+4. **Currencies:** amounts in their own currency, an exchange rate table with a _valid from_ date (manual first, later from the Czech National Bank), totals in CZK.
+5. **Accounts and balances:** enter the real balance and add an uncategorised correction for the difference; transfers.
+6. **Recurring payments and savings goals** (a target ratio of Need / Want / Saving).
+7. **Split transactions:** one payment split across several categories or spread over several months; usage count and average cost per use.
+8. **Purchase details** (purchase date, end of warranty, receipt), a satisfaction dimension, per-category listing with statistics.
+9. **Budgets and limits** (lowest priority).
+10. _Maybe:_ sync between devices or mobile access, which needs a new ADR (see [ADR 0001](adr/0001-local-docker-stack.md)).
