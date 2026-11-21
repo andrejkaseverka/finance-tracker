@@ -40,7 +40,7 @@ By week 4 the Angular side should have covered components, forms, routing, HttpC
   - Node LTS 24.22.2+ + Angular CLI (`npm i -g @angular/cli`)
   - Python 3.12+ and [`uv`](https://docs.astral.sh/uv/)
   - VS Code extensions: Angular Language Service, Python, Ruff, ESLint, Prettier, Docker
-- [ ] Sister: finish the HTML course and learn Git basics. **First PR:** a small README improvement.
+- [x] Sister: finish the HTML course and learn Git basics. **First PR:** a small README improvement.
 
 ## Phase 1: Specification workshop (week 1)
 
